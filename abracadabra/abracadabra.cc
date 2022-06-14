@@ -416,7 +416,7 @@ int main(int argc, char** argv) {
       auto y = r * sin(phi);
       auto z = 100  * mm;
       generate_back_to_back_511_keV_gammas(event, {x,y,z}, 0);
-    }}
+    }},
     {"full_fov"    , [&](auto event) {
       auto length = messenger.cylinder_length  * mm;
       // The inner cavity radius is hardwired at the moment, fix!
