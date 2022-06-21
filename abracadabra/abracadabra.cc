@@ -404,7 +404,7 @@ int main(int argc, char** argv) {
   };
 
   // ----- A choice of generators ---------------------------------------------------------
-  // Can choose generator in macros with `/abracadabra/generator <choice>`
+  // Can choose generator in macros with `/generator/choose <choice>`
   std::map<G4String, n4::generator::function> generators = {
     {"origin"      , [ ](auto event) { generate_back_to_back_511_keV_gammas(event, {}, 0); }},
     {"phantom"     , [&](auto event) { phantom_generate(event); }},
@@ -422,6 +422,15 @@ int main(int argc, char** argv) {
       // The inner cavity radius is hardwired at the moment, fix!
       auto r      = 325   * mm;
       auto z      = uniform(-length / 2, length / 2);
+      auto [x, y] = random_on_disc(r);
+      generate_back_to_back_511_keV_gammas(event, {x, y, z}, 0);
+    }},
+    {"half_fov"    , [&](auto event) {
+      // Very inefficient but quick as messenger alteration not obvious.
+      auto length = messenger.cylinder_length  * mm;
+      // The inner cavity radius is hardwired at the moment, fix!
+      auto r      = 155   * mm;
+      auto z      = uniform(-length / 4, length / 4);
       auto [x, y] = random_on_disc(r);
       generate_back_to_back_511_keV_gammas(event, {x, y, z}, 0);
     }}
